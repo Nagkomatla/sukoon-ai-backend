@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from datetime import datetime
 import json
+import os
 
 app = FastAPI(title="Sukoon AI Backend")
 
@@ -22,7 +23,15 @@ async def post_call_trigger(request: Request):
     print(f"[{timestamp}] Received post-call data:")
     print(json.dumps(data, indent=2))
 
-    with open("post_call_logs.json", "a") as f:
+    # Create logs directory if it doesn't exist
+    os.makedirs("logs", exist_ok=True)
+    
+    log_file = "logs/post_call_logs.json"
+    with open(log_file, "a") as f:
         f.write(json.dumps({"timestamp": timestamp, "data": data}) + "\n")
 
     return {"status": "success", "received": True}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

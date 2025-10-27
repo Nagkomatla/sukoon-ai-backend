@@ -24,3 +24,7 @@ desktop.ini
 .env
 *.log
 
+# Logs
+logs/
+post_call_logs.json
+
