@@ -6,6 +6,10 @@ import os
 
 app = FastAPI(title="Sukoon AI Backend")
 
+@app.get("/")
+def root():
+    return {"message": "Welcome to Sukoon AI Backend", "status": "online"}
+
 @app.get("/api/sukoon/greeting")
 async def dynamic_greeting(patient_name: str = "Patient"):
     message = f"Hello {patient_name}, I hope you are feeling well today. How are you?"
